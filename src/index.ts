@@ -1,13 +1,19 @@
 import CSVReader from './CSVReader';
+import MatchesReader from './MatchesReader';
+import MatchResults from './MatchResults';
 
-enum MatchResults {
-  HomeWin = 'H',
-  AwayWin = 'A',
-  Draw = 'D',
-}
+export type MatchData = [
+  Date,
+  string,
+  string,
+  number,
+  number,
+  MatchResults,
+  string
+];
 
 class GameStats {
-  static countTeamWins(teamName: string, matches: string[][]): number {
+  static countTeamWins(teamName: string, matches: MatchData[]): number {
     let manUnitedWon = 0;
 
     matches.forEach((match) => {
@@ -21,7 +27,10 @@ class GameStats {
   }
 }
 
-const matchesArray = CSVReader.read('./football.csv');
-let manUnitedWon = GameStats.countTeamWins('Man United', matchesArray);
+const matchReader = new MatchesReader(new CSVReader());
+matchReader.load('./football.csv');
+const matches = matchReader.matches;
+let manUnitedWon = GameStats.countTeamWins('Man United', matches);
 
+console.log(matches[0]);
 console.log('Man United', manUnitedWon);

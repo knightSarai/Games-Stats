@@ -6,15 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var CSVReader = /** @class */ (function () {
     function CSVReader() {
+        this.data = [];
     }
-    CSVReader.read = function (filePath) {
-        var matches = fs_1.default
+    CSVReader.prototype.read = function (filePath) {
+        this.data = fs_1.default
             .readFileSync(filePath, {
             encoding: 'utf-8',
         })
             .split('\n')
             .map(function (match) { return match.split(','); });
-        return matches;
     };
     return CSVReader;
 }());
