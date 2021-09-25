@@ -2,9 +2,10 @@ import fs from 'fs';
 
 export default class CSVReader {
   data: string[][] = [];
-  read(filePath: string): void {
+  constructor(public filePath: string) {}
+  read(): void {
     this.data = fs
-      .readFileSync(filePath, {
+      .readFileSync(this.filePath, {
         encoding: 'utf-8',
       })
       .split('\n')

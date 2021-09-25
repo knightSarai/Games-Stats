@@ -5,12 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var CSVReader = /** @class */ (function () {
-    function CSVReader() {
+    function CSVReader(filePath) {
+        this.filePath = filePath;
         this.data = [];
     }
-    CSVReader.prototype.read = function (filePath) {
+    CSVReader.prototype.read = function () {
         this.data = fs_1.default
-            .readFileSync(filePath, {
+            .readFileSync(this.filePath, {
             encoding: 'utf-8',
         })
             .split('\n')

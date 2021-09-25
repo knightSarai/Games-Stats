@@ -1,18 +1,22 @@
 import MatchResults from './MatchResults';
 import { dateStringToDate } from './utils';
-import { MatchData } from './index';
+import MatchData from './MatchData';
+import CSVReader from './CSVReader';
 
 interface DataReader {
   data: string[][];
-  read(filePath: string): void;
+  read(): void;
 }
 
 export default class MatchesReader {
   matches: MatchData[] = [];
+  static fromCsv(filePath: string): MatchesReader {
+    return new MatchesReader(new CSVReader(filePath));
+  }
   constructor(public reader: DataReader) {}
 
-  load(filePath: string): void {
-    this.reader.read(filePath);
+  load(): void {
+    this.reader.read();
     this.matches = this.reader.data.map(
       (matchElements): MatchData => [
         dateStringToDate(matchElements[0]),
